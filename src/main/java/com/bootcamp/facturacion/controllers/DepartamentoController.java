@@ -21,6 +21,11 @@ public class DepartamentoController {
         return servicio.listadoDepartamentos();
     }
 
+    @GetMapping("/{id}")
+    public Departamento unDepartamento(@PathVariable Long id){
+        return servicio.unDepartamento(id);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Departamento guardar(@RequestBody Departamento depto){

@@ -21,6 +21,11 @@ public class DepartamentoService {
         return repo.findAll();
     }
 
+    public Departamento unDepartamento(Long id){
+        // select * from departamentos
+        return repo.findById(id).get();
+    }
+
     public Departamento guardar(Departamento departamento){
         //insert into departamento(id, codigo, nombre) values (1,'04','Chalatenango')
         // Asignar la referencia del departamento a cada municipio

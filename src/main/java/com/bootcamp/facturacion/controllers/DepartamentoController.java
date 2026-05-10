@@ -26,6 +26,8 @@ public class DepartamentoController {
         return servicio.guardar(depto);
     }
 
+    //public Departamento eliminar(int id){}
+
 
 
 }

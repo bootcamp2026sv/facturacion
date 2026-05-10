@@ -25,4 +25,13 @@ public class DepartamentoService {
         return repo.save(departamento);
     }
 
+    public void eliminarDepartamento(Long id) {
+        // Verificamos si existe antes de intentar borrar
+        if (!repo.existsById(id)) {
+            throw new RuntimeException("No se encontró el departamento con el ID: " + id);
+        }
+        repo.deleteById(id);
+    }
+
+
 }

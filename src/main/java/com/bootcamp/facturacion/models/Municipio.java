@@ -1,5 +1,6 @@
 package com.bootcamp.facturacion.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class Municipio {
     @Column(name = "nombre", nullable = false)
     private String Nombre;
 
+    @JsonIgnore //solventar problema de recursion
     @ManyToOne
     @JoinColumn(name = "departamento_id", nullable = false)
     private Departamento departamento;

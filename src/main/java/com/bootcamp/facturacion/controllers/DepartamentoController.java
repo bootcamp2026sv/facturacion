@@ -4,6 +4,7 @@ import com.bootcamp.facturacion.models.Departamento;
 import com.bootcamp.facturacion.services.DepartamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +27,12 @@ public class DepartamentoController {
         return servicio.guardar(depto);
     }
 
-    //public Departamento eliminar(int id){}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id){
+    //http://localhost:8080/api/v1/departamentos/1
+       servicio.eliminarDepartamento(id);
+       return ResponseEntity.noContent().build();
+    }
 
 
 

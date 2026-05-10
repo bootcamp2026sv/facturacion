@@ -34,5 +34,12 @@ public class DepartamentoService {
         repo.deleteById(id);
     }
 
+    public Departamento actualizar(Departamento departamento) {
+        // UPDATE departamento SET codigo=?, nombre=? WHERE id=?
+        return repo.save(departamento);
+        //save cuando la entidad lleva id, hace update y cuando no hace insert
+    }
+
+
 
 }

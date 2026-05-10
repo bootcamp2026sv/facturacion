@@ -34,6 +34,14 @@ public class DepartamentoController {
        return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Departamento actualizar(@PathVariable Long id, @RequestBody Departamento depto) {
+        depto.setId(id);
+        return servicio.actualizar(depto);
+    }
+
+
 
 
 }

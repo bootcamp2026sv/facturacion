@@ -3,6 +3,10 @@ package com.bootcamp.facturacion.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 @Entity
 @Table(name = "municipios")
 @Getter
@@ -21,5 +25,9 @@ public class Municipio {
 
     @Column(name = "nombre", nullable = false)
     private String Nombre;
+
+    @ManyToOne
+    @JoinColumn(name = "departamento_id", nullable = false)
+    private Departamento departamento;
 
 }

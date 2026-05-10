@@ -16,11 +16,13 @@ public class DepartamentoController {
     @Autowired
     private DepartamentoService servicio;
 
+    //GET http://localhost:8080/api/v1/departamentos
     @GetMapping
     public List<Departamento> listadoDepartamentos(){
         return servicio.listadoDepartamentos();
     }
 
+    //GET http://localhost:8080/api/v1/departamentos/4
     @GetMapping("/{id}")
     public Departamento unDepartamento(@PathVariable Long id){
         return servicio.unDepartamento(id);

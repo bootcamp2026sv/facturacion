@@ -51,12 +51,9 @@ public class Cliente{
     @ManyToOne
     @JoinColumn(name = "municipio_id", nullable = true)
     private Municipio municipio;
+
+    @JsonIgnore //solventar problema de recursion
+    @ManyToOne
+    @JoinColumn(name = "actividadEconomica_id", nullable = true)
+    private ActividadEconomica actividadEconomica;
 }
-/*
-* A considerar despues
-*
-  public String codActividad;
-  public String descActividad;
-  *
-  *
-* */

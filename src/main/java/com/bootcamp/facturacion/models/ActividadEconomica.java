@@ -12,7 +12,6 @@ import lombok.*;
 @Builder
 public class ActividadEconomica {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;

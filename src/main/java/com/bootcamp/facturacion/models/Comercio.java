@@ -14,6 +14,6 @@ public class Comercio {
     private String codPuntoVentaMH; // P00X
     private String codPuntoVenta; // lo mismo que VentaMH
     private String correo;// email valido
-    public Direccion direccion;
+
 
 }

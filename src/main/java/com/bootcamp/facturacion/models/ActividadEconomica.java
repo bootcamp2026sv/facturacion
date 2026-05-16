@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "cat_actividadesEconomicas")
+@Table(name = "catActividadesEconomicas")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,7 +16,7 @@ public class ActividadEconomica {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "codActividad", nullable = false)
+    @Column(name = "codActividad", nullable = false, unique = true)
     private String codActividad; // no nulo
 
     @Column(name = "descActividad", nullable = false)

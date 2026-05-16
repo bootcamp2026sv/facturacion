@@ -45,7 +45,7 @@ public class Cliente{
     private boolean granContribuyente;
 
     @Column(name = "complemento", nullable = true)
-    private String complemento;
+    private String complementoDireccion;
 
     @JsonIgnore //solventar problema de recursion
     @ManyToOne

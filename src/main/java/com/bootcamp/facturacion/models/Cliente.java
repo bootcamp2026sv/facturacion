@@ -50,12 +50,12 @@ public class Cliente{
     @Column(name = "activo", nullable = false)
     private boolean activo; // soft delete
 
-    @JsonIgnore //solventar problema de recursion
+
     @ManyToOne
     @JoinColumn(name = "municipio_id", nullable = true)
     private Municipio municipio;
 
-    @JsonIgnore //solventar problema de recursion
+
     @ManyToOne
     @JoinColumn(name = "actividadEconomica_id", nullable = true)
     private ActividadEconomica actividadEconomica;

@@ -22,6 +22,7 @@ public class ActividadEconomica {
     @Column(name = "descActividad", nullable = false)
     private String descActividad; // no nulo
 
+
     @Column(name = "activo", nullable = false)
     private boolean activo; // soft delete
 }

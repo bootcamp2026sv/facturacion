@@ -42,25 +42,25 @@ public class DetalleVenta{
     @Column(name = "precioUni", nullable = false)
     public double precioUni;
 
-    @Column(name = "montoDescu", nullable = true)
+    @Column(name = "montoDescu", nullable = false)
     public double montoDescu;
 
-    @Column(name = "ventaNoSuj", nullable = true)
+    @Column(name = "ventaNoSuj", nullable = false)
     public double ventaNoSuj;
 
-    @Column(name = "ventaExenta", nullable = true)
+    @Column(name = "ventaExenta", nullable = false)
     public double ventaExenta;
 
-    @Column(name = "ventaGravada", nullable = true)
+    @Column(name = "ventaGravada", nullable = false)
     public double ventaGravada;
     //  public Object tributos; array
     @Column(name = "psv", nullable = false)
     public double psv; //precio sugerido de venta
 
-    @Column(name = "noGravado", nullable = true)
+    @Column(name = "noGravado", nullable = false)
     public double noGravado;
 
-    @Column(name = "ivaItem", nullable = true)
+    @Column(name = "ivaItem", nullable = false)
     public double ivaItem;
 
     //relaciones
@@ -68,4 +68,9 @@ public class DetalleVenta{
     @ManyToOne
     @JoinColumn(name = "unimedida_id", nullable = false)
     private UnidadDeMedida uniMedida;
+
+    @JsonIgnore //solventar problema de recursion
+    @ManyToOne
+    @JoinColumn(name = "venta_id", nullable = false)
+    private Venta venta;
 }

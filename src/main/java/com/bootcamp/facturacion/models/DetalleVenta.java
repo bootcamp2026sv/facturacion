@@ -20,7 +20,7 @@ public class DetalleVenta{
     @Column(name = "numItem", nullable = false)
     public int numItem;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "tipoItem", nullable = false)
     public TipoBien tipoItem; //  enum
 

@@ -5,6 +5,9 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "ventas")
 @Getter
@@ -85,6 +88,10 @@ public class Venta{
 
     @Column(name = "totalIva", nullable = false, precision = 18, scale = 4)
     private BigDecimal totalIva;
+
+
+    @OneToMany(mappedBy = "ventas", cascade = CascadeType.ALL, orphanRemoval = false)
+    private List<DetalleVenta> detallesVenta = new ArrayList<>();
 
 }
 

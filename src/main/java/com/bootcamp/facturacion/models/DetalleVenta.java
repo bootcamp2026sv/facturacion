@@ -55,7 +55,9 @@ public class DetalleVenta{
 
     @Column(name = "ventaGravada", nullable = false, precision = 18, scale = 4)
     public BigDecimal ventaGravada;
+
     //  public Object tributos; array
+
     @Column(name = "psv", nullable = false, precision = 18, scale = 4)
     public BigDecimal psv; //precio sugerido de venta
 

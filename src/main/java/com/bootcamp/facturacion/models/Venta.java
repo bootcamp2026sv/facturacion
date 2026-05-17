@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 @Entity
-@Table(name = "Venta")
+@Table(name = "ventas")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -39,10 +39,10 @@ public class Venta{
     private int tipoOperacion; //1
 
     @Column(name = "tipoContingencia", nullable = true)
-    private Object tipoContingencia; //null
+    private String tipoContingencia; //null
 
     @Column(name = "motivoContin", nullable = true)
-    private Object motivoContin; //null
+    private String motivoContin; //null
 
     @Column(name = "fecha", nullable = false)
     private LocalDateTime fecha;

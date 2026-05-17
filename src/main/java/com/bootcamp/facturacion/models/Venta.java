@@ -90,7 +90,7 @@ public class Venta{
     private BigDecimal totalIva;
 
 
-    @OneToMany(mappedBy = "ventas", cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = false)
     private List<DetalleVenta> detallesVenta = new ArrayList<>();
 
 }

@@ -38,14 +38,14 @@ public class Comercio {
     @Column(name = "codEstableMH", nullable = false)
     private String codEstableMH;// M001 / S00X  codigo de sucursales
 
-    @Column(name = "codEstable", nullable = false)
-    private String codEstable; // Lo mismo que EstableMH
+   /* @Column(name = "codEstable", nullable = false)
+    private String codEstable; // Lo mismo que EstableMH */
 
     @Column(name = "codPuntoVentaMH", nullable = false)
     private String codPuntoVentaMH; // P00X
 
-    @Column(name = "codPuntoVenta", nullable = false)
-    private String codPuntoVenta; // lo mismo que VentaMH
+   /* @Column(name = "codPuntoVenta", nullable = false)
+    private String codPuntoVenta; // lo mismo que VentaMH */
 
     @Column(name = "correo", nullable = false)
     private String correo;// email valido

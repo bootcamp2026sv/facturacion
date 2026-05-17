@@ -64,10 +64,11 @@ public class DetalleVenta{
     public double ivaItem;
 
     //relaciones
+
     @JsonIgnore //solventar problema de recursion
     @ManyToOne
-    @JoinColumn(name = "unimedida_id", nullable = false)
-    private UnidadDeMedida uniMedida;
+    @JoinColumn(name = "producto_id", nullable = false)
+    private Producto producto;
 
     @JsonIgnore //solventar problema de recursion
     @ManyToOne

@@ -53,12 +53,14 @@ public class Producto {
     @Column(name = "stockMinimo", nullable = false)
     private double stockMinimo;
 
+    @Column(name = "activo", nullable = false)
+    private boolean activo; // soft delete
+
     //relaciones
     @JsonIgnore //solventar problema de recursion
     @ManyToOne
     @JoinColumn(name = "unimedida_id", nullable = false)
     private UnidadDeMedida uniMedida;
-
 }
 
 // despues No Gravado, No Sujeto, Exento

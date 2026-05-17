@@ -47,6 +47,9 @@ public class Cliente{
     @Column(name = "complemento", nullable = true)
     private String complementoDireccion;
 
+    @Column(name = "activo", nullable = false)
+    private boolean activo; // soft delete
+
     @JsonIgnore //solventar problema de recursion
     @ManyToOne
     @JoinColumn(name = "municipio_id", nullable = true)

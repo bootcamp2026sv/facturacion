@@ -3,6 +3,7 @@ package com.bootcamp.facturacion.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 @Entity
 @Table(name = "ventas")
@@ -64,26 +65,26 @@ public class Venta{
     private String selloAnulacion;
 
     //TOTAL
-    @Column(name = "totalGeneral", nullable = false)
-    private double totalGeneral;
+    @Column(name = "totalGeneral", nullable = false, precision = 18, scale = 4)
+    private BigDecimal totalGeneral;
 
-    @Column(name = "totalExento", nullable = false)
-    private double totalExento;
+    @Column(name = "totalExento", nullable = false, precision = 18, scale = 4)
+    private BigDecimal totalExento;
 
-    @Column(name = "totalNoSujeto", nullable = false)
-    private double totalNoSujeto;
+    @Column(name = "totalNoSujeto", nullable = false, precision = 18, scale = 4)
+    private BigDecimal totalNoSujeto;
 
-    @Column(name = "totalGravado", nullable = false)
-    private double totalGravado;
+    @Column(name = "totalGravado", nullable = false, precision = 18, scale = 4)
+    private BigDecimal totalGravado;
 
-    @Column(name = "totalNoGravado", nullable = false)
-    private double totalNoGravado;
+    @Column(name = "totalNoGravado", nullable = false, precision = 18, scale = 4)
+    private BigDecimal totalNoGravado;
 
-    @Column(name = "totalDescuento", nullable = false)
-    private double totalDescuento;
+    @Column(name = "totalDescuento", nullable = false, precision = 18, scale = 4)
+    private BigDecimal totalDescuento;
 
-    @Column(name = "totalIva", nullable = false)
-    private double totalIva;
+    @Column(name = "totalIva", nullable = false, precision = 18, scale = 4)
+    private BigDecimal totalIva;
 
 }
 

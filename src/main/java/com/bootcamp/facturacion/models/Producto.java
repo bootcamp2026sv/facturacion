@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "productos")
 @Getter
@@ -23,20 +25,20 @@ public class Producto {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "costo", nullable = false)
-    private double costo;
+    @Column(name = "costo", nullable = false, precision = 18, scale = 4)
+    private BigDecimal costo;
 
-    @Column(name = "precioConIVA", nullable = false)
-    private double precioConIVA;
+    @Column(name = "precioConIVA", nullable = false, precision = 18, scale = 4)
+    private BigDecimal precioConIVA;
 
-    @Column(name = "precioSinIVA", nullable = false)
-    private double precioSinIVA;
+    @Column(name = "precioSinIVA", nullable = false, precision = 18, scale = 4)
+    private BigDecimal precioSinIVA;
 
-    @Column(name = "precioRebajado", nullable = false)
-    private double precioRebajado;
+    @Column(name = "precioRebajado", nullable = false, precision = 18, scale = 4)
+    private BigDecimal precioRebajado;
 
-    @Column(name = "existencia", nullable = false)
-    private double existencia;
+    @Column(name = "existencia", nullable = false, precision = 18, scale = 4)
+    private BigDecimal existencia;
 
     @Column(name = "consignacion", nullable = false)
     private boolean consignacion;
@@ -51,7 +53,7 @@ public class Producto {
     private String descripcion;
 
     @Column(name = "stockMinimo", nullable = false)
-    private double stockMinimo;
+    private BigDecimal stockMinimo;
 
     @Column(name = "activo", nullable = false)
     private boolean activo; // soft delete

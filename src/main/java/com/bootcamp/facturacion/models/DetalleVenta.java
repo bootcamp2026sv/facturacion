@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "detallesVenta")
 @Getter
@@ -27,8 +29,8 @@ public class DetalleVenta{
     @Column(name = "numeroDocumento", nullable = true)
     public String numeroDocumento;
 
-    @Column(name = "cantidad", nullable = false)
-    public float cantidad;
+    @Column(name = "cantidad", nullable = false, precision = 18, scale = 4)
+    public BigDecimal cantidad;
 
     @Column(name = "codigo", nullable = false)
     public String codigo;
@@ -39,29 +41,29 @@ public class DetalleVenta{
     @Column(name = "descripcion", nullable = false)
     public String descripcion;
 
-    @Column(name = "precioUni", nullable = false)
-    public double precioUni;
+    @Column(name = "precioUni", nullable = false, precision = 18, scale = 4)
+    public BigDecimal precioUni;
 
-    @Column(name = "montoDescu", nullable = false)
-    public double montoDescu;
+    @Column(name = "montoDescu", nullable = false, precision = 18, scale = 4)
+    public BigDecimal montoDescu;
 
-    @Column(name = "ventaNoSuj", nullable = false)
-    public double ventaNoSuj;
+    @Column(name = "ventaNoSuj", nullable = false, precision = 18, scale = 4)
+    public BigDecimal ventaNoSuj;
 
-    @Column(name = "ventaExenta", nullable = false)
-    public double ventaExenta;
+    @Column(name = "ventaExenta", nullable = false, precision = 18, scale = 4)
+    public BigDecimal ventaExenta;
 
-    @Column(name = "ventaGravada", nullable = false)
-    public double ventaGravada;
+    @Column(name = "ventaGravada", nullable = false, precision = 18, scale = 4)
+    public BigDecimal ventaGravada;
     //  public Object tributos; array
-    @Column(name = "psv", nullable = false)
-    public double psv; //precio sugerido de venta
+    @Column(name = "psv", nullable = false, precision = 18, scale = 4)
+    public BigDecimal psv; //precio sugerido de venta
 
-    @Column(name = "noGravado", nullable = false)
-    public double noGravado;
+    @Column(name = "noGravado", nullable = false, precision = 18, scale = 4)
+    public BigDecimal noGravado;
 
-    @Column(name = "ivaItem", nullable = false)
-    public double ivaItem;
+    @Column(name = "ivaItem", nullable = false, precision = 18, scale = 4)
+    public BigDecimal ivaItem;
 
     //relaciones
 

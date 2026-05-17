@@ -1,5 +1,7 @@
 package com.bootcamp.facturacion.models;
 
+import com.bootcamp.facturacion.enums.TipoBien;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,8 +20,9 @@ public class DetalleVenta{
     @Column(name = "numItem", nullable = false)
     public int numItem;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipoItem", nullable = false)
-    public int tipoItem; // 1 2 3 hacer un enum
+    public TipoBien tipoItem; //  enum
 
     @Column(name = "numeroDocumento", nullable = true)
     public String numeroDocumento;
@@ -50,8 +53,8 @@ public class DetalleVenta{
 
     @Column(name = "ventaGravada", nullable = true)
     public double ventaGravada;
-  //  public Object tributos; array
-  @Column(name = "psv", nullable = false)
+    //  public Object tributos; array
+    @Column(name = "psv", nullable = false)
     public double psv; //precio sugerido de venta
 
     @Column(name = "noGravado", nullable = true)
@@ -61,5 +64,8 @@ public class DetalleVenta{
     public double ivaItem;
 
     //relaciones
-    public int uniMedida;
+    @JsonIgnore //solventar problema de recursion
+    @ManyToOne
+    @JoinColumn(name = "unimedida_id", nullable = false)
+    private UnidadDeMedida uniMedida;
 }

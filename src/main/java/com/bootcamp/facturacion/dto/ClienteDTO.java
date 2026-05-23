@@ -1,9 +1,8 @@
 package com.bootcamp.facturacion.dto;
 
-import com.bootcamp.facturacion.models.ActividadEconomica;
-import com.bootcamp.facturacion.models.Municipio;
-import jakarta.persistence.*;
 import lombok.*;
+
+
 
 @Getter
 @Setter
@@ -11,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class ClienteDTO {
-    private int id;
+    private Long id;
     private int tipoDocumento;
     private String numDocumento;
     private String nrc;
@@ -22,10 +21,9 @@ public class ClienteDTO {
     private String correo;
     private boolean granContribuyente;
     private String complementoDireccion;
-    private int municipio_id;
-    private int actividadEconomica_id;
+    private Long municipio_id;
+    private Long actividadEconomica_id;
 }
-
 /*
 {
 	"id": 1,

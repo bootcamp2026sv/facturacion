@@ -1,5 +1,6 @@
 package com.bootcamp.facturacion.controllers;
 
+import com.bootcamp.facturacion.dto.ClienteDTO;
 import com.bootcamp.facturacion.models.Cliente;
 import com.bootcamp.facturacion.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,8 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente guardar(@RequestBody Cliente cliente){
+    //sin DTO public Cliente guardar(@RequestBody Cliente cliente){
+    public Cliente guardar(@RequestBody ClienteDTO cliente){
         return servicio.guardar(cliente);
     }
 

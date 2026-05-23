@@ -64,7 +64,33 @@ public class ClienteService {
         repo.deleteById(id);
     }
 
-    public Cliente actualizar(Cliente cliente) {
+    public Cliente actualizar(ClienteDTO clienteDTO) {
+
+        Cliente cliente= new Cliente();
+        cliente.setId(clienteDTO.getId()); //si id null insert, si trae valor update
+        cliente.setActivo(cliente.isActivo());
+        cliente.setNombre(clienteDTO.getNombre());
+        cliente.setApellidos(clienteDTO.getApellidos());
+        cliente.setNombreComercial(clienteDTO.getNombreComercial());
+        cliente.setNrc(clienteDTO.getNrc());
+        cliente.setTipoDocumento(clienteDTO.getTipoDocumento());
+        cliente.setNumDocumento(clienteDTO.getNumDocumento());
+        cliente.setTelefono(clienteDTO.getTelefono());
+        cliente.setComplementoDireccion(clienteDTO.getComplementoDireccion());
+        cliente.setCorreo(clienteDTO.getCorreo());
+        cliente.setGranContribuyente(clienteDTO.isGranContribuyente());
+
+        Municipio municipio= new Municipio();
+        municipio.setId(clienteDTO.getMunicipio_id());
+
+        ActividadEconomica actividad = new ActividadEconomica();
+        actividad.setId(clienteDTO.getActividadEconomica_id());
+        actividad.setActivo(true);
+
+        cliente.setMunicipio(municipio);
+        cliente.setActividadEconomica(actividad);
+
+
         return repo.save(cliente);
     }
 

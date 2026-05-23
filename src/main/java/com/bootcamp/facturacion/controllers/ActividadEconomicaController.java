@@ -20,6 +20,7 @@ public class ActividadEconomicaController {
     //GET http://localhost:8080/api/v1/ActividadEconomicas
     @GetMapping
     public List<ActividadEconomica> listadoActividadEconomicas(){
+
         return servicio.listadoActividades();
     }
 

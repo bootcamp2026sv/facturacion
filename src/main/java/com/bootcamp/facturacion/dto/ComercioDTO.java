@@ -3,25 +3,24 @@ package com.bootcamp.facturacion.dto;
 import lombok.*;
 
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ClienteDTO {
+public class ComercioDTO {
     private Long id;
-    private int tipoDocumento;
-    private String numDocumento;
+    private String nit;
     private String nrc;
     private String nombre;
-    private String apellidos;
     private String nombreComercial;
     private String telefono;
     private String correo;
     private boolean granContribuyente;
-    private boolean activo;
     private String complementoDireccion;
+    private int tipoEstablecimiento;
+    private String codEstableMH;
+    private String codPuntoVentaMH;
     private Long municipio_id;
     private Long actividadEconomica_id;
 }

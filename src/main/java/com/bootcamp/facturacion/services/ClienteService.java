@@ -68,7 +68,7 @@ public class ClienteService {
 
         Cliente cliente= new Cliente();
         cliente.setId(clienteDTO.getId()); //si id null insert, si trae valor update
-        cliente.setActivo(cliente.isActivo());
+        cliente.setActivo(clienteDTO.isActivo());
         cliente.setNombre(clienteDTO.getNombre());
         cliente.setApellidos(clienteDTO.getApellidos());
         cliente.setNombreComercial(clienteDTO.getNombreComercial());

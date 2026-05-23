@@ -1,5 +1,6 @@
 package com.bootcamp.facturacion.controllers;
 
+import com.bootcamp.facturacion.dto.ComercioDTO;
 import com.bootcamp.facturacion.models.Comercio;
 import com.bootcamp.facturacion.services.ComercioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,8 @@ public class ComercioController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Comercio guardar(@RequestBody Comercio comercio){
+    public Comercio guardar(@RequestBody ComercioDTO comercio){
+
         return servicio.guardar(comercio);
     }
 
@@ -44,7 +46,7 @@ public class ComercioController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Comercio actualizar(@PathVariable Long id, @RequestBody Comercio comercio) {
+    public Comercio actualizar(@PathVariable Long id, @RequestBody ComercioDTO comercio) {
         comercio.setId(id);
         return servicio.actualizar(comercio);
     }

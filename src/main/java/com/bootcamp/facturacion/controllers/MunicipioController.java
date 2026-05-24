@@ -24,23 +24,25 @@ public class MunicipioController {
     private MunicipioService servicio;
 
 
-    @Operation(summary = "Obtener todos los municipios",description = "Devuelve lista con todos los municipios registrados")
-    @ApiResponse(responseCode = "200", description = "Lista obtenida exitosamente")
+    @Operation(summary = "Obtener todos los municipios",
+            description = "Devuelve lista con todos los municipios registrados")
+    @ApiResponse(responseCode = "200",
+            description = "Lista obtenida exitosamente")
     @GetMapping
-    public List<Municipio> listadoDepartamentos(){
+    public List<Municipio> listadoMunicipios(){
         return servicio.listadoMunicipios();
     }
 
 
 
-    //GET http://localhost:8080/api/v1/departamentos/4
+    //GET http://localhost:8080/api/v1/municipios/4
     @Operation(summary = "Obtener un municipio",description = "Devuelve un municipio registrado")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Municipio obtenido exitosamente"),
             @ApiResponse(responseCode = "404", description = "Municipio no encontrado, revisar x catalogo")
     })
     @GetMapping("/{id}")
-    public Municipio unDepartamento(
+    public Municipio unMunicipio(
             @Parameter(description = "ID del municipio", example = "1")
             @PathVariable Long id
     )
@@ -56,7 +58,7 @@ public class MunicipioController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id){
-    //http://localhost:8080/api/v1/departamentos/1
+    //http://localhost:8080/api/v1/municipios/1
        servicio.eliminarMunicipio(id);
        return ResponseEntity.noContent().build();
     }

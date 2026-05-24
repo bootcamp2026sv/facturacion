@@ -23,6 +23,6 @@ public class Departamento {
     @Column(name = "nombre", nullable = false)
     private String Nombre;
 
-    @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, orphanRemoval = false,fetch = FetchType.EAGER)
     private List<Municipio> municipios = new ArrayList<>();
 }

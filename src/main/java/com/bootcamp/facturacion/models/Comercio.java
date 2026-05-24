@@ -56,12 +56,12 @@ public class Comercio {
     @Column(name = "complemento", nullable = true)
     private String complementoDireccion;
 
-    @JsonIgnore //solventar problema de recursion
+
     @ManyToOne
     @JoinColumn(name = "municipio_id", nullable = true)
     private Municipio municipio;
 
-    @JsonIgnore //solventar problema de recursion
+
     @ManyToOne
     @JoinColumn(name = "actividadEconomica_id", nullable = true)
     private ActividadEconomica actividadEconomica;

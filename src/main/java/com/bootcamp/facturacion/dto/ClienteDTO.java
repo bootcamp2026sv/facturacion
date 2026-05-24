@@ -24,6 +24,8 @@ public class ClienteDTO {
     private String complementoDireccion;
     private Long municipio_id;
     private Long actividadEconomica_id;
+
+
 }
 /*
 {

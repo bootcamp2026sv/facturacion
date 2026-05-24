@@ -1,6 +1,7 @@
 package com.bootcamp.facturacion.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,14 +12,18 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Schema(description = "Entidad que representa un cliente del sistema")
 public class Cliente{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "ID autogenerado", example = "1",
+            accessMode = Schema.AccessMode.READ_ONLY)
     private Long Id;
 
     @Column(name = "tipoDocumento", nullable = true)
-    private int tipoDocumento; // 13 DUI 36 NIT 37 OTRO
+    @Schema(description = "Tipo de documento", example = "13 DUI 36 NIT 37 OTRO")
+    private int tipoDocumento;
 
     @Column(name = "numDocumento", nullable = true)
     private String numDocumento;// sin guiones

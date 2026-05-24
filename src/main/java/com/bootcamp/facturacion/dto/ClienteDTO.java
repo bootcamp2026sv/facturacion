@@ -1,5 +1,6 @@
 package com.bootcamp.facturacion.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 
@@ -9,11 +10,14 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Schema(description = "DTO para transferencia de datos de cliente")
 public class ClienteDTO {
+    @Schema(description = "ID del cliente", example = "1")
     private Long id;
     private int tipoDocumento;
     private String numDocumento;
     private String nrc;
+    @Schema(description = "Nombre del cliente", example = "Juan Perez",requiredMode = Schema.RequiredMode.REQUIRED)
     private String nombre;
     private String apellidos;
     private String nombreComercial;

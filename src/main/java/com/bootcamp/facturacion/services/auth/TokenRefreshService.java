@@ -34,15 +34,13 @@ public class TokenRefreshService {
         Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + usuarioId));
 
-        // Eliminar token anterior de este usuario para que no se acumulen
-        tokenRefreshRepository.deleteByUsuario(usuario);
+        // Buscar token existente de este usuario para actualizarlo o crear uno nuevo si no existe
+        TokenRefresh refreshToken = tokenRefreshRepository.findByUsuario(usuario)
+                .orElseGet(() -> TokenRefresh.builder().usuario(usuario).build());
 
-        TokenRefresh refreshToken = TokenRefresh.builder()
-                .usuario(usuario)
-                .token(UUID.randomUUID().toString())
-                .expiraEn(Instant.now().plusMillis(refreshExpirationMs))
-                .revocado(false)
-                .build();
+        refreshToken.setToken(UUID.randomUUID().toString());
+        refreshToken.setExpiraEn(Instant.now().plusMillis(refreshExpirationMs));
+        refreshToken.setRevocado(false);
 
         return tokenRefreshRepository.save(refreshToken);
     }

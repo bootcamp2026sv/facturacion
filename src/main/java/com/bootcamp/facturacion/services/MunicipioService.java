@@ -1,5 +1,6 @@
 package com.bootcamp.facturacion.services;
 
+import com.bootcamp.facturacion.models.Distrito;
 import com.bootcamp.facturacion.models.Municipio;
 import com.bootcamp.facturacion.repository.MunicipioRepository;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,13 @@ public class MunicipioService {
 
     public Municipio guardar(Municipio municipio){
 
+        //insert into departamento(id, codigo, nombre) values (1,'04','Chalatenango')
+        // Asignar la referencia del departamento a cada municipio
+        if (municipio.getDistritos() != null) {
+            for (Distrito distrito : municipio.getDistritos()) {
+                distrito.setMunicipio(municipio); // ← clave
+            }
+        }
         return repo.save(municipio);
     }
 

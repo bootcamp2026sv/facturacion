@@ -5,6 +5,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "municipios")
 @Getter
@@ -32,5 +35,9 @@ public class Municipio {
     @JoinColumn(name = "departamento_id", nullable = false)
     @Schema(description = "Departamento al que pertenece")
     private Departamento departamento;
+
+    @OneToMany(mappedBy = "municipio", cascade = CascadeType.ALL, orphanRemoval = false,fetch = FetchType.EAGER)
+    @Schema(description = "Lista de distritos del municipio")
+    private List<Distrito> distritos = new ArrayList<>();
 
 }

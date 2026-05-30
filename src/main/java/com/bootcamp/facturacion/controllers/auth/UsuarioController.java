@@ -28,6 +28,7 @@ public class UsuarioController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Usuario guardar(@RequestBody UsuarioDTO usuario){
+
         return servicio.registrarUsuario(usuario);
     }
 

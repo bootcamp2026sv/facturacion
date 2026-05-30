@@ -5,10 +5,15 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "usuarios")
@@ -17,7 +22,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Schema(description = "Entidad que representa un usuario del sistema")
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,5 +67,47 @@ public class Usuario {
     @EqualsAndHashCode.Exclude
     @Schema(description = "Roles asignados al usuario")
     private Set<Rol> roles = new HashSet<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        for (Rol rol : roles) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + rol.getNombre()));
+            for (Permiso permiso : rol.getPermisos()) {
+                authorities.add(new SimpleGrantedAuthority(permiso.getNombre()));
+            }
+        }
+        return authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return contrasena;
+    }
+
+    @Override
+    public String getUsername() {
+        return nombreUsuario;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return habilitado;
+    }
 }
 

@@ -1,25 +1,28 @@
 package com.bootcamp.facturacion.dto;
 
-import com.bootcamp.facturacion.models.auth.Rol;
-import jakarta.persistence.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Schema(description = "DTO para transferencia de datos de usuario")
 public class UsuarioDTO {
 
+    @Schema(description = "ID del usuario", example = "1")
     private Long id;
+
+    @Schema(description = "Nombre de usuario", example = "jperez", requiredMode = Schema.RequiredMode.REQUIRED)
     private String nombreUsuario;
+
+    @Schema(description = "Correo electrónico", example = "jperez@correo.com", requiredMode = Schema.RequiredMode.REQUIRED)
     private String correo;
+
+    @Schema(description = "Contraseña", example = "miPassword123", requiredMode = Schema.RequiredMode.REQUIRED)
     private String contrasena;
+
+    @Schema(description = "Usuario habilitado", example = "true")
     private boolean habilitado;
 
 }

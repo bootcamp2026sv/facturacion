@@ -15,7 +15,7 @@ public class CorrelativoDteService {
     public CorrelativoDteService(CorrelativoDteRepository repository) {
         this.repository = repository;
     }
-
+    // o se hace bien o no se hace nada
     @Transactional
     public String obtenerSiguienteNumeroControl(String tipoDte, String ambiente, String codEstable, String codPuntoVenta) {
         int anioActual = LocalDate.now().getYear();
@@ -40,11 +40,11 @@ public class CorrelativoDteService {
         Long siguienteValor = correlativo.getUltimoValor() + 1;
         correlativo.setUltimoValor(siguienteValor);
         repository.save(correlativo);
-
         // 3. Formatear a los 15 dígitos requeridos por el MH (ej: "000000000000844")
         String correlativoFormateado = String.format("%015d", siguienteValor);
 
         // 4. Retornar el número de control DTE estructurado
+        //DTE-01-M001P001-202500000000001
         return "DTE-" + tipoDte + "-" + codEstable + codPuntoVenta + "-" + correlativoFormateado;
     }
 }
@@ -59,4 +59,15 @@ String numeroControl = correlativoService.obtenerSiguienteNumeroControl(
     venta.getComercio().getCodPuntoVentaMH()
 );
 venta.setNumeroControl(numeroControl);
+*
+* BEGIN
+* Inicia la transaccion en la base de datos
+*
+*
+* COMMIT
+*
+*
+* ROLLBACK
+*
+*
 * */

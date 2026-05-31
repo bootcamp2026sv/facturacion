@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface CorrelativoDteRepository extends JpaRepository<CorrelativoDte, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
+    //Hql
     @Query("SELECT c FROM CorrelativoDte c WHERE c.tipoDte = :tipoDte AND c.ambiente = :ambiente " +
            "AND c.anio = :anio AND c.codEstable = :codEstable AND c.codPuntoVenta = :codPuntoVenta")
     Optional<CorrelativoDte> obtenerCorrelativoConBloqueo(

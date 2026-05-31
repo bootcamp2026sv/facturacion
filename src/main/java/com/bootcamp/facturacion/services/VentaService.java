@@ -5,6 +5,7 @@ import com.bootcamp.facturacion.models.Venta;
 import com.bootcamp.facturacion.models.Municipio;
 import com.bootcamp.facturacion.repository.VentaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class VentaService {
         return repo.findById(id).get();
     }
 
+    @Transactional
     public Venta guardar(Venta venta){
 
         if (venta.getDetallesVenta() != null) {

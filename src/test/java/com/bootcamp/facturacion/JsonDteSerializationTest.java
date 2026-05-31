@@ -24,25 +24,25 @@ class JsonDteSerializationTest {
                 .version(2)
                 .ambiente("00")
                 .tipoDte("01")
-                .numeroControl("DTE-01-M001P001-000000000000844")
-                .codigoGeneracion("C5DE3D38-5732-4822-B57A-DBFCC9A253CD")
+                .numeroControl("DTE-01-M001P001-000000000000200")
+                .codigoGeneracion("C5DE3D38-5732-8888-B57A-DBFCC9A253CD")
                 .tipoModelo(1)
                 .tipoOperacion(1)
                 .tipoContingencia(null)
                 .motivoContin(null)
-                .fecEmi(LocalDate.of(2026, 5, 27))
-                .horEmi(LocalTime.of(9, 11, 9))
+                .fecEmi(LocalDate.of(2026, 5, 31))
+                .horEmi(LocalTime.of(11, 01, 0))
                 .tipoMoneda("USD")
                 .build();
 
         // 2. Instanciar Emisor
         Emisor01 emisor = Emisor01.builder()
-                .nit("053380001")
-                .nrc("2773203")
-                .nombre("demo facturame")
-                .codActividad("47739")
+                .nit("001084323")
+                .nrc("1065025")
+                .nombre("Juana de Chacon")
+                .codActividad("47199")
                 .descActividad("Venta al por menor de otros productos n.c.p.")
-                .nombreComercial("demo facturame")
+                .nombreComercial("Juana de Chacon")
                 .telefono("70000000")
                 .codEstable("M001")
                 .codPuntoVenta("P001")
@@ -150,8 +150,8 @@ class JsonDteSerializationTest {
 
         assertNotNull(json);
         assertTrue(json.contains("\"version\" : 2"));
-        assertTrue(json.contains("\"fecEmi\" : \"2026-05-27\""));
-        assertTrue(json.contains("\"horEmi\" : \"09:11:09\""));
+        assertTrue(json.contains("\"fecEmi\" : \"2026-05-31\""));
+        assertTrue(json.contains("\"horEmi\" : \"11:01:00\""));
         assertTrue(json.contains("\"cuerpoDocumento\" : ["));
         assertTrue(json.contains("\"departamento\" : \"04\""));
     }

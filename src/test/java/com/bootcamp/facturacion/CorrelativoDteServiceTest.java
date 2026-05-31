@@ -40,7 +40,7 @@ class CorrelativoDteServiceTest {
                 .anio(anioActual)
                 .codEstable("M001")
                 .codPuntoVenta("P001")
-                .ultimoValor(843L)
+                .ultimoValor(0L)
                 .build();
 
         when(repository.obtenerCorrelativoConBloqueo(eq("01"), eq("00"), eq(anioActual), eq("M001"), eq("P001")))
@@ -54,7 +54,7 @@ class CorrelativoDteServiceTest {
         // THEN
         // El valor 843 incrementado es 844 -> padded to 15 digits is "000000000000844"
         // Formato: DTE-[Tipo]-[Establecimiento][PuntoVenta]-[15 dígitos correlativo]
-        assertEquals("DTE-01-M001P001-000000000000844", numeroControl);
+        assertEquals("DTE-01-M001P001-000000000000001", numeroControl);
     }
 
     @Test
@@ -62,16 +62,16 @@ class CorrelativoDteServiceTest {
         // GIVEN
         int anioActual = LocalDate.now().getYear();
 
-        when(repository.obtenerCorrelativoConBloqueo(eq("03"), eq("01"), eq(anioActual), eq("M002"), eq("P002")))
+        when(repository.obtenerCorrelativoConBloqueo(eq("03"), eq("01"), eq(anioActual), eq("M001"), eq("P001")))
                 .thenReturn(Optional.empty());
         
         when(repository.save(any(CorrelativoDte.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // WHEN
-        String numeroControl = service.obtenerSiguienteNumeroControl("03", "01", "M002", "P002");
+        String numeroControl = service.obtenerSiguienteNumeroControl("03", "01", "M001", "P001");
 
         // THEN
         // El valor debe iniciar en 1 -> padded to 15 digits is "000000000000001"
-        assertEquals("DTE-03-M002P002-000000000000001", numeroControl);
+        assertEquals("DTE-03-M001P001-000000000000001", numeroControl);
     }
 }

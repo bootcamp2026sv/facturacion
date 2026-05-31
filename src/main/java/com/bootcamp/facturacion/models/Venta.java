@@ -116,4 +116,13 @@ public class Venta{
     @Schema(description = "Detalles de la venta (líneas de productos)")
     private List<DetalleVenta> detallesVenta = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
+    @Schema(description = "Cliente receptor del DTE")
+    private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "comercio_id", nullable = false)
+    @Schema(description = "Comercio emisor del DTE")
+    private Comercio comercio;
 }

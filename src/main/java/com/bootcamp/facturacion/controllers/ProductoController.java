@@ -80,6 +80,7 @@ public class ProductoController {
             @ApiResponse(responseCode = "200", description = "Producto actualizado exitosamente"),
             @ApiResponse(responseCode = "404", description = "Producto no encontrado")
     })
+
     @PreAuthorize("hasAuthority('EDIT_PRODUCT')")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)

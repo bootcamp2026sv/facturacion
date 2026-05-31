@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class ProductoController {
             description = "Devuelve lista con todos los productos registrados")
     @ApiResponse(responseCode = "200", description = "Lista obtenida exitosamente")
     @GetMapping
+
     public List<Producto> listadoProductos(){
         return servicio.listadoProductos();
     }
@@ -63,6 +65,7 @@ public class ProductoController {
             @ApiResponse(responseCode = "404", description = "Producto no encontrado")
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')") // Permite el paso si tiene "ROLE_ADMIN" o "ROLE_USER"
     public ResponseEntity<Void> eliminar(
             @Parameter(description = "ID del producto", example = "1")
             @PathVariable Long id
@@ -77,6 +80,7 @@ public class ProductoController {
             @ApiResponse(responseCode = "200", description = "Producto actualizado exitosamente"),
             @ApiResponse(responseCode = "404", description = "Producto no encontrado")
     })
+    @PreAuthorize("hasAuthority('EDIT_PRODUCT')")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Producto actualizar(

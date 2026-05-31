@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,7 +27,7 @@ public class CuerpoDocumento01 {
     private BigDecimal ventaNoSuj;
     private BigDecimal ventaExenta;
     private BigDecimal ventaGravada;
-    private String tributos;
+    private List<String> tributos;
     private BigDecimal psv;
     private BigDecimal noGravado;
     private BigDecimal ivaItem;

@@ -10,14 +10,17 @@ import java.util.List;
 @Builder
 public class JsonDte01V2 {
     private Identificacion01 identificacion;
-    private DocumentoRelacionado01 documentoRelacionado;
+    private List<DocumentoRelacionado01> documentoRelacionado;
     private Emisor01 emisor;
     private Receptor01 receptor;
     private VentaTercero01 ventaTercero;
     private List<CuerpoDocumento01> cuerpoDocumento;
     private Resumen01 resumen;
-    private OtrosDocumentos01 otrosDocumentos;
-    private Apendice01 apendice;
+    private List<OtrosDocumentos01> otrosDocumentos;
+    private List<Apendice01> apendice;
 }
 
 
+// DTO= clase en java
+// DTE= Documento Tributario Electronico
+// DTE = distincion de que esa clase forma parte del json a enviar

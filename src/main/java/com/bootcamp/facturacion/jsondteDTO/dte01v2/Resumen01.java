@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,7 +24,7 @@ public class Resumen01 {
     private BigDecimal descuGravada;
     private BigDecimal porcentajeDescuento;
     private BigDecimal totalDescu;
-    private String tributos;
+    private List<ResumenTributo01> tributos;
     private BigDecimal subTotal;
     private BigDecimal ivaRete;
     private BigDecimal montoTotalOperacion;
@@ -33,7 +33,7 @@ public class Resumen01 {
     private BigDecimal totalIva;
     private BigDecimal saldoFavor;
     private int condicionOperacion;
-    private ArrayList<PagosV2DTO> pagos;
+    private List<PagosV2DTO> pagos;
     private String numPagoElectronico;
     private String observaciones;
 }

@@ -11,14 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Controlador REST para gestionar la generación y consulta de correlativos de DTE
- * para el Ministerio de Hacienda (MH).
- * <p>
- * Nota: Se ubica bajo el prefijo "/auth" para permitir el acceso público de pruebas
- * sin requerir autenticación JWT.
- * </p>
- */
+
 @RestController
 @RequestMapping("api/v1/auth/correlativos")
 @Tag(name = "Correlativos DTE", description = "Endpoints para la gestión y generación de números de control correlativos para DTE")

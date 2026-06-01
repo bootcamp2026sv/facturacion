@@ -1,6 +1,7 @@
 package com.bootcamp.facturacion.services;
 
 import com.bootcamp.facturacion.models.Departamento;
+import com.bootcamp.facturacion.models.Distrito;
 import com.bootcamp.facturacion.models.Municipio;
 import com.bootcamp.facturacion.repository.DepartamentoRepository;
 import org.springframework.stereotype.Service;
@@ -32,8 +33,17 @@ public class DepartamentoService {
         if (departamento.getMunicipios() != null) {
             for (Municipio municipio : departamento.getMunicipios()) {
                 municipio.setDepartamento(departamento); // ← clave
+
+                if (municipio.getDistritos() != null) {
+                    for (Distrito distrito : municipio.getDistritos()) {
+                        distrito.setMunicipio(municipio); // ← clave
+                    }
+                }
+
             }
         }
+
+
         return repo.save(departamento);
     }
 

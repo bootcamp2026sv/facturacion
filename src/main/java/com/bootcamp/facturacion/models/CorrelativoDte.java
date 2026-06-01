@@ -3,6 +3,8 @@ package com.bootcamp.facturacion.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(
     name = "correlativos_dte",
@@ -22,6 +24,7 @@ public class CorrelativoDte {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(value = "id", access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     @Column(name = "tipo_dte", nullable = false, length = 2)

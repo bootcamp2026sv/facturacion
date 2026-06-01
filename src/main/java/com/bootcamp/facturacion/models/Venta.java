@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "ventas")
 @Getter
@@ -21,6 +23,7 @@ public class Venta{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(value = "id", access = JsonProperty.Access.READ_ONLY)
     @Schema(description = "ID autogenerado", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     private Long Id;
 
@@ -115,6 +118,7 @@ public class Venta{
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = false)
     @Schema(description = "Detalles de la venta (líneas de productos)")
     private List<DetalleVenta> detallesVenta = new ArrayList<>();
+    //**************************************************************************
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)

@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "api/v1/Productos")
 @Tag(name = "Productos", description = "Gestión de productos")
+
 public class ProductoController {
 
     @Autowired
@@ -65,7 +66,7 @@ public class ProductoController {
             @ApiResponse(responseCode = "404", description = "Producto no encontrado")
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')") // Permite el paso si tiene "ROLE_ADMIN" o "ROLE_USER"
+  //  @PreAuthorize("hasAnyRole('ADMIN', 'USER')") // Permite el paso si tiene "ROLE_ADMIN" o "ROLE_USER"
     public ResponseEntity<Void> eliminar(
             @Parameter(description = "ID del producto", example = "1")
             @PathVariable Long id
@@ -81,7 +82,7 @@ public class ProductoController {
             @ApiResponse(responseCode = "404", description = "Producto no encontrado")
     })
 
-    @PreAuthorize("hasAuthority('EDIT_PRODUCT')")
+    //@PreAuthorize("hasAuthority('EDIT_PRODUCT')")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Producto actualizar(

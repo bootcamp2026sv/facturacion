@@ -7,6 +7,8 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "departamentos")
 @Getter
@@ -18,6 +20,7 @@ import java.util.List;
 public class Departamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(value = "id", access = JsonProperty.Access.READ_ONLY)
     @Schema(description = "ID autogenerado", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     private Long Id;
     @Column(name = "codigo", nullable = false)

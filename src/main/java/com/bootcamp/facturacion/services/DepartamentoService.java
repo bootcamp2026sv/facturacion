@@ -50,6 +50,7 @@ public class DepartamentoService {
     public void eliminarDepartamento(Long id) {
         // Verificamos si existe antes de intentar borrar
         //Implementar opcional SOFTDELETE
+
         if (!repo.existsById(id)) {
             throw new RuntimeException("No se encontró el departamento con el ID: " + id);
         }

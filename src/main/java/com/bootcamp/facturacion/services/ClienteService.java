@@ -31,6 +31,7 @@ public class ClienteService {
     }
 
     public Cliente unCliente(Long id){
+
         return repo.findById(id).get();
     }
 

@@ -1,5 +1,7 @@
 package com.bootcamp.facturacion.services;
 
+import com.bootcamp.facturacion.dto.MunicipioDTO;
+import com.bootcamp.facturacion.models.Departamento;
 import com.bootcamp.facturacion.models.Distrito;
 import com.bootcamp.facturacion.models.Municipio;
 import com.bootcamp.facturacion.repository.MunicipioRepository;
@@ -26,16 +28,25 @@ public class MunicipioService {
         return repo.findById(id).get();
     }
 
-    public Municipio guardar(Municipio municipio){
+    public Municipio guardar(MunicipioDTO municipio){
+
+        Departamento depto= new Departamento();
+        depto.setId(municipio.getDepartamento_id());
+
+        Municipio muni= new Municipio();
+        muni.setCodigo(municipio.getCodigo());
+        muni.setNombre(municipio.getNombre());
+        muni.setDepartamento(depto);
+
 
         //insert into departamento(id, codigo, nombre) values (1,'04','Chalatenango')
         // Asignar la referencia del departamento a cada municipio
-        if (municipio.getDistritos() != null) {
-            for (Distrito distrito : municipio.getDistritos()) {
-                distrito.setMunicipio(municipio); // ← clave
+        if (muni.getDistritos() != null) {
+            for (Distrito distrito : muni.getDistritos()) {
+                distrito.setMunicipio(muni); // ← clave
             }
         }
-        return repo.save(municipio);
+        return repo.save(muni);
     }
 
     public void eliminarMunicipio(Long id) {

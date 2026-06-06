@@ -23,9 +23,11 @@ public class Departamento {
     @JsonProperty(value = "id", access = JsonProperty.Access.READ_ONLY)
     @Schema(description = "ID autogenerado", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     private Long Id;
+
     @Column(name = "codigo", nullable = false)
     @Schema(description = "Código del departamento", example = "01")
     private String Codigo;
+
     @Column(name = "nombre", nullable = false)
     @Schema(description = "Nombre del departamento", example = "San Salvador")
     private String Nombre;

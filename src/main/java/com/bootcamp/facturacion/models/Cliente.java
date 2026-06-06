@@ -25,7 +25,7 @@ public class Cliente{
     private Long Id;
 
     @Column(name = "tipoDocumento", nullable = true)
-    @Schema(description = "Tipo de documento", example = "13 DUI 36 NIT 37 OTRO")
+    @Schema(description = "Tipo de documento", example = "13") // 13 DUI 36 NIT 37 OTRO
     private int tipoDocumento;
 
     @Column(name = "numDocumento", nullable = true)

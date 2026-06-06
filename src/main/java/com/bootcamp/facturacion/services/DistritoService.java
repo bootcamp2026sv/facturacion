@@ -1,6 +1,8 @@
 package com.bootcamp.facturacion.services;
 
+import com.bootcamp.facturacion.dto.DistritoDTO;
 import com.bootcamp.facturacion.models.Distrito;
+import com.bootcamp.facturacion.models.Municipio;
 import com.bootcamp.facturacion.repository.DistritoRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,15 @@ public class DistritoService {
         return repo.findById(id).get();
     }
 
-    public Distrito guardar(Distrito distrito){
+    public Distrito guardar(DistritoDTO distritoDto){
+        Municipio muni= new Municipio();
+        muni.setId(distritoDto.getMunicipio_id());
+
+
+        Distrito distrito= new Distrito();
+        distrito.setCodigo(distritoDto.getCodigo());
+        distrito.setNombre(distritoDto.getNombre());
+        distrito.setMunicipio(muni);
 
         return repo.save(distrito);
     }

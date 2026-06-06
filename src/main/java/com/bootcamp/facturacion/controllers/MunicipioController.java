@@ -1,5 +1,6 @@
 package com.bootcamp.facturacion.controllers;
 
+import com.bootcamp.facturacion.dto.MunicipioDTO;
 import com.bootcamp.facturacion.models.Municipio;
 import com.bootcamp.facturacion.services.MunicipioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -72,8 +73,10 @@ public class MunicipioController {
                             )
                     )
             )
-            @RequestBody Municipio municipio
+            @RequestBody MunicipioDTO municipio
     ){
+
+
         return servicio.guardar(municipio);
     }
 

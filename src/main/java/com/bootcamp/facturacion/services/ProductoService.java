@@ -1,8 +1,10 @@
 package com.bootcamp.facturacion.services;
 
+import com.bootcamp.facturacion.dto.ProductoDTO;
 import com.bootcamp.facturacion.models.Producto;
-import com.bootcamp.facturacion.repository.ActividadEconomicaRepository;
+import com.bootcamp.facturacion.models.UnidadDeMedida;
 import com.bootcamp.facturacion.repository.ProductoRepository;
+import com.bootcamp.facturacion.repository.UnidadDeMedidaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +13,11 @@ import java.util.List;
 public class ProductoService {
 
     private final ProductoRepository repo;
+    private final UnidadDeMedidaRepository unimedidaRepo;
 
-    public ProductoService(ProductoRepository repo) {
+    public ProductoService(ProductoRepository repo, UnidadDeMedidaRepository unimedidaRepo) {
         this.repo = repo;
+        this.unimedidaRepo = unimedidaRepo;
     }
 
     public List<Producto> listadoProductos(){
@@ -24,9 +28,29 @@ public class ProductoService {
         return repo.findById(id).get();
     }
 
+    public Producto guardar(ProductoDTO dto){
+        Producto producto = new Producto();
+        mapDtoToEntity(dto, producto);
 
-    public Producto guardar(Producto producto){
+        UnidadDeMedida um = null;
+        if (dto.getUnimedidaId() != null) {
+            um = unimedidaRepo.findById(dto.getUnimedidaId()).orElse(null);
+        }
 
+        if (um == null) {
+            List<UnidadDeMedida> units = unimedidaRepo.findAll();
+            if (units.isEmpty()) {
+                um = UnidadDeMedida.builder()
+                        .codUnidad(59)
+                        .descUnidad("Unidad")
+                        .build();
+                um = unimedidaRepo.save(um);
+            } else {
+                um = units.get(0);
+            }
+        }
+
+        producto.setUniMedida(um);
         return repo.save(producto);
     }
 
@@ -37,8 +61,38 @@ public class ProductoService {
         repo.deleteById(id);
     }
 
-    public Producto actualizar(Producto producto) {
+    public Producto actualizar(ProductoDTO dto) {
+        Producto producto = repo.findById(dto.getId())
+                .orElseThrow(() -> new RuntimeException("No se encontró el producto con el ID: " + dto.getId()));
+        
+        mapDtoToEntity(dto, producto);
+
+        UnidadDeMedida um = null;
+        if (dto.getUnimedidaId() != null) {
+            um = unimedidaRepo.findById(dto.getUnimedidaId()).orElse(null);
+        }
+
+        if (um != null) {
+            producto.setUniMedida(um);
+        }
+
         return repo.save(producto);
+    }
+
+    private void mapDtoToEntity(ProductoDTO dto, Producto producto) {
+        producto.setCodigo(dto.getCodigo());
+        producto.setNombre(dto.getNombre());
+        producto.setCosto(dto.getCosto());
+        producto.setPrecioConIVA(dto.getPrecioConIVA());
+        producto.setPrecioSinIVA(dto.getPrecioSinIVA());
+        producto.setPrecioRebajado(dto.getPrecioRebajado());
+        producto.setExistencia(dto.getExistencia());
+        producto.setConsignacion(dto.isConsignacion());
+        producto.setMarca(dto.getMarca());
+        producto.setCategoria(dto.getCategoria());
+        producto.setDescripcion(dto.getDescripcion());
+        producto.setStockMinimo(dto.getStockMinimo());
+        producto.setActivo(dto.isActivo());
     }
 
 }

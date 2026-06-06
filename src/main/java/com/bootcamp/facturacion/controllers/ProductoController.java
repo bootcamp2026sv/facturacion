@@ -1,5 +1,6 @@
 package com.bootcamp.facturacion.controllers;
 
+import com.bootcamp.facturacion.dto.ProductoDTO;
 import com.bootcamp.facturacion.models.Producto;
 import com.bootcamp.facturacion.services.ProductoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -55,7 +56,7 @@ public class ProductoController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Producto guardar(@RequestBody Producto producto){
+    public Producto guardar(@RequestBody ProductoDTO producto){
         return servicio.guardar(producto);
     }
 
@@ -66,7 +67,7 @@ public class ProductoController {
             @ApiResponse(responseCode = "404", description = "Producto no encontrado")
     })
     @DeleteMapping("/{id}")
-  //  @PreAuthorize("hasAnyRole('ADMIN', 'USER')") // Permite el paso si tiene "ROLE_ADMIN" o "ROLE_USER"
+    //  @PreAuthorize("hasAnyRole('ADMIN', 'USER')") // Permite el paso si tiene "ROLE_ADMIN" o "ROLE_USER"
     public ResponseEntity<Void> eliminar(
             @Parameter(description = "ID del producto", example = "1")
             @PathVariable Long id
@@ -88,7 +89,7 @@ public class ProductoController {
     public Producto actualizar(
             @Parameter(description = "ID del producto", example = "1")
             @PathVariable Long id,
-            @RequestBody Producto producto
+            @RequestBody ProductoDTO producto
     ) {
         producto.setId(id);
         return servicio.actualizar(producto);

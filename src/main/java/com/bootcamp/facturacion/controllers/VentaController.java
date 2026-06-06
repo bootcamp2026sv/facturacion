@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,7 +51,61 @@ public class VentaController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Venta guardar(@RequestBody Venta venta){
+    public Venta guardar(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "JSON de la venta a registrar",
+                    required = true,
+                    content = @io.swagger.v3.oas.annotations.media.Content(
+                            mediaType = "application/json",
+                            schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Venta.class),
+                            examples = @io.swagger.v3.oas.annotations.media.ExampleObject(
+                                    name = "VentaEjemplo",
+                                    summary = "Ejemplo de registro de venta válido",
+                                    value = """
+                                    {
+                                      "version": 1,
+                                      "ambiente": "00",
+                                      "tipoDte": "01",
+                                      "codigoGeneracion": "288e60c6-aeb4-414b-9227-9b4c16d35c1e",
+                                      "tipoModelo": 1,
+                                      "tipoOperacion": 1,
+                                      "tipoContingencia": null,
+                                      "motivoContin": null,
+                                      "fecha": "2025-01-15T10:30:00",
+                                      "tipoMoneda": "USD",
+                                      "totalGeneral": "100.0000",
+                                      "totalExento": "0.0000",
+                                      "totalNoSujeto": "0.0000",
+                                      "totalGravado": "100.0000",
+                                      "totalNoGravado": "0.0000",
+                                      "totalDescuento": "0.0000",
+                                      "totalIva": "13.0000",
+                                      "detallesVenta": [
+                                        {
+                                          "numItem": 1,
+                                          "tipoItem": "BIEN",
+                                          "cantidad": "1.0000",
+                                          "codigo": "PROD-001",
+                                          "descripcion": "Laptop HP 15.6",
+                                          "precioUni": "600.0000",
+                                          "montoDescu": "0.0000",
+                                          "ventaNoSuj": "0.0000",
+                                          "ventaExenta": "0.0000",
+                                          "ventaGravada": "600.0000",
+                                          "psv": "600.0000",
+                                          "noGravado": "0.0000",
+                                          "ivaItem": "78.0000"
+                                        }
+                                      ],
+                                      "cliente": { "id": 1 },
+                                      "comercio": { "id": 1 }
+                                    }
+                                    """
+                            )
+                    )
+            )
+            @RequestBody Venta venta
+    ) {
         return servicio.guardar(venta);
     }
 

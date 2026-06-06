@@ -26,7 +26,7 @@ public class ClienteDTO {
     private boolean granContribuyente;
     private boolean activo;
     private String complementoDireccion;
-    private Long municipio_id;
+    private Long distrito_id;
     private Long actividadEconomica_id;
 
 

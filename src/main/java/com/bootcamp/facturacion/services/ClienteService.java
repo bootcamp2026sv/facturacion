@@ -4,8 +4,11 @@ import com.bootcamp.facturacion.dto.ClienteDTO;
 import com.bootcamp.facturacion.models.ActividadEconomica;
 import com.bootcamp.facturacion.models.Cliente;
 import com.bootcamp.facturacion.models.Departamento;
+import com.bootcamp.facturacion.models.Distrito;
 import com.bootcamp.facturacion.models.Municipio;
 import com.bootcamp.facturacion.repository.ClienteRepository;
+import com.bootcamp.facturacion.repository.DistritoRepository;
+import com.bootcamp.facturacion.repository.ActividadEconomicaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +17,13 @@ import java.util.List;
 public class ClienteService {
 
     private final ClienteRepository repo;
+    private final DistritoRepository distritoRepo;
+    private final ActividadEconomicaRepository actividadRepo;
 
-    public ClienteService(ClienteRepository repo) {
+    public ClienteService(ClienteRepository repo, DistritoRepository distritoRepo, ActividadEconomicaRepository actividadRepo) {
         this.repo = repo;
+        this.distritoRepo = distritoRepo;
+        this.actividadRepo = actividadRepo;
     }
 
     public List<Cliente> listadoClientes(){
@@ -44,14 +51,17 @@ public class ClienteService {
         cliente.setCorreo(clienteDTO.getCorreo());
         cliente.setGranContribuyente(clienteDTO.isGranContribuyente());
 
-        Municipio municipio= new Municipio();
-        municipio.setId(clienteDTO.getMunicipio_id());
+        Distrito distrito = null;
+        if (clienteDTO.getDistrito_id() != null) {
+            distrito = distritoRepo.findById(clienteDTO.getDistrito_id()).orElse(null);
+        }
 
-        ActividadEconomica actividad = new ActividadEconomica();
-        actividad.setId(clienteDTO.getActividadEconomica_id());
-        actividad.setActivo(true);
+        ActividadEconomica actividad = null;
+        if (clienteDTO.getActividadEconomica_id() != null) {
+            actividad = actividadRepo.findById(clienteDTO.getActividadEconomica_id()).orElse(null);
+        }
 
-        cliente.setMunicipio(municipio);
+        cliente.setDistrito(distrito);
         cliente.setActividadEconomica(actividad);
 
         return repo.save(cliente);
@@ -80,16 +90,18 @@ public class ClienteService {
         cliente.setCorreo(clienteDTO.getCorreo());
         cliente.setGranContribuyente(clienteDTO.isGranContribuyente());
 
-        Municipio municipio= new Municipio();
-        municipio.setId(clienteDTO.getMunicipio_id());
+        Distrito distrito = null;
+        if (clienteDTO.getDistrito_id() != null) {
+            distrito = distritoRepo.findById(clienteDTO.getDistrito_id()).orElse(null);
+        }
 
-        ActividadEconomica actividad = new ActividadEconomica();
-        actividad.setId(clienteDTO.getActividadEconomica_id());
-        actividad.setActivo(true);
+        ActividadEconomica actividad = null;
+        if (clienteDTO.getActividadEconomica_id() != null) {
+            actividad = actividadRepo.findById(clienteDTO.getActividadEconomica_id()).orElse(null);
+        }
 
-        cliente.setMunicipio(municipio);
+        cliente.setDistrito(distrito);
         cliente.setActividadEconomica(actividad);
-
 
         return repo.save(cliente);
     }

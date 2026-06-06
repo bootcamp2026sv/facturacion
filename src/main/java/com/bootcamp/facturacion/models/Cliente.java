@@ -60,8 +60,8 @@ public class Cliente{
 
 
     @ManyToOne
-    @JoinColumn(name = "municipio_id", nullable = true)
-    private Municipio municipio;
+    @JoinColumn(name = "distrito_id", nullable = true)
+    private Distrito distrito;
 
 
     @ManyToOne

@@ -38,7 +38,7 @@ public class Producto {
     private BigDecimal costo;
 
     @Column(name = "precioConIVA", nullable = false, precision = 18, scale = 4)
-    @Schema(description = "Precio de venta con IVA", example = "680.0000")
+    @Schema(description = "Precio de venta con IVA", example = "678.0000")
     private BigDecimal precioConIVA;
 
     @Column(name = "precioSinIVA", nullable = false, precision = 18, scale = 4)
@@ -77,7 +77,6 @@ public class Producto {
     @Schema(description = "Producto activo (soft delete)", example = "true")
     private boolean activo;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "unimedida_id", nullable = false)
     @Schema(description = "Unidad de medida del producto")

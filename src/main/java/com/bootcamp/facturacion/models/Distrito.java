@@ -32,7 +32,7 @@ public class Distrito {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "municipio_id", nullable = false)
-    @Schema(description = "Municipio al que pertenece")
+    @Schema(description = "Municipio al que pertenece", hidden = true)
     private Municipio municipio;
 
 }

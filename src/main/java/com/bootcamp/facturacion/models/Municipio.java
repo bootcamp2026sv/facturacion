@@ -35,11 +35,11 @@ public class Municipio {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "departamento_id", nullable = false)
-    @Schema(description = "Departamento al que pertenece")
+    @Schema(description = "Departamento al que pertenece", hidden = true)
     private Departamento departamento;
 
     @OneToMany(mappedBy = "municipio", cascade = CascadeType.ALL, orphanRemoval = false,fetch = FetchType.EAGER)
-    @Schema(description = "Lista de distritos del municipio")
+    @Schema(description = "Lista de distritos del municipio", hidden = true)
     private List<Distrito> distritos = new ArrayList<>();
 
 }

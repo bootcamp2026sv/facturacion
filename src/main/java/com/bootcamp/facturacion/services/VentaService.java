@@ -50,25 +50,58 @@ public class VentaService {
 
     @Transactional
     public Venta guardar(Venta venta) {
-        // 1. Resolver comercio (debe existir en BD)
-        venta.setComercio(resolverComercio(venta.getComercio()));
+        return guardar(venta, true);
+    }
 
-        // 2. Resolver cliente (debe existir en BD)
-        venta.setCliente(resolverCliente(venta.getCliente()));
+    @Transactional
+    public Venta guardar(Venta venta, boolean validar) {
+        if (validar) {
+            // 1. Resolver comercio (debe existir en BD)
+            venta.setComercio(resolverComercio(venta.getComercio()));
 
-        // 3. Generar número de control
-        venta.setNumeroControl(generarNumeroControl(venta));
+            // 2. Resolver cliente (debe existir en BD)
+            venta.setCliente(resolverCliente(venta.getCliente()));
 
-        // 4. Defaults
-        if (venta.getFecha() == null) {
+            // 3. Generar número de control
+            venta.setNumeroControl(generarNumeroControl(venta));
+
+            // 4. Defaults
             venta.setFecha(LocalDateTime.now());
-        }
-        if (venta.getJsonVenta() == null) {
-            venta.setJsonVenta("");
-        }
+            if (venta.getJsonVenta() == null) {
+                venta.setJsonVenta("");
+            }
+            venta.setCodigoGeneracion(java.util.UUID.randomUUID().toString().toUpperCase());
 
-        // 5. Resolver productos en cada detalle
-        resolverDetalles(venta);
+            // 5. Resolver productos en cada detalle
+            resolverDetalles(venta);
+        } else {
+            // Camino rápido / directo por ID:
+            // 1. Resolver relaciones directas por ID en BD para evitar transient exceptions y traer codigos MH
+            if (venta.getComercio() != null && venta.getComercio().getId() != null) {
+                comercioRepo.findById(venta.getComercio().getId()).ifPresent(venta::setComercio);
+            }
+            if (venta.getCliente() != null && venta.getCliente().getId() != null) {
+                clienteRepo.findById(venta.getCliente().getId()).ifPresent(venta::setCliente);
+            }
+
+            // 2. Resolver detalles y sus productos asociados por ID
+            if (venta.getDetallesVenta() != null) {
+                for (DetalleVenta detalle : venta.getDetallesVenta()) {
+                    detalle.setVenta(venta);
+                    if (detalle.getProducto() != null && detalle.getProducto().getId() != null) {
+                        productoRepo.findById(detalle.getProducto().getId()).ifPresent(detalle::setProducto);
+                    }
+                }
+            }
+
+            // 3. Generar datos únicos obligatorios de la venta
+            venta.setNumeroControl(generarNumeroControl(venta));
+            venta.setCodigoGeneracion(java.util.UUID.randomUUID().toString().toUpperCase());
+            venta.setFecha(LocalDateTime.now());
+            if (venta.getJsonVenta() == null) {
+                venta.setJsonVenta("");
+            }
+        }
 
         return repo.save(venta);
     }

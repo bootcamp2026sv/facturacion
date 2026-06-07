@@ -52,31 +52,26 @@ public class VentaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Venta guardar(
+            @RequestParam(name = "validar", required = false, defaultValue = "true") boolean validar,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "JSON de la venta a registrar",
                     required = true,
                     content = @io.swagger.v3.oas.annotations.media.Content(
                             mediaType = "application/json",
-                            schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Venta.class),
-                            examples = @io.swagger.v3.oas.annotations.media.ExampleObject(
-                                    name = "VentaEjemplo",
-                                    summary = "Ejemplo de registro de venta válido",
-                                    value = """
+                            schema = @io.swagger.v3.oas.annotations.media.Schema(
+                                    type = "object",
+                                    example = """
                                     {
                                       "version": 1,
                                       "ambiente": "00",
                                       "tipoDte": "01",
+                                      "numeroControl": "DTE-01-M001P001-000000000001000",
                                       "codigoGeneracion": "288e60c6-aeb4-414b-9227-9b4c16d35c1e",
                                       "tipoModelo": 1,
                                       "tipoOperacion": 1,
-                                      "tipoContingencia": null,
-                                      "motivoContin": null,
                                       "fecha": "2025-01-15T10:30:00",
                                       "tipoMoneda": "USD",
                                       "jsonVenta": "",
-                                      "selloRecepcion": "",
-                                      "jsonAnulacion": "",
-                                      "selloAnulacion": "",
                                       "totalGeneral": "100.0000",
                                       "totalExento": "0.0000",
                                       "totalNoSujeto": "0.0000",
@@ -84,15 +79,19 @@ public class VentaController {
                                       "totalNoGravado": "0.0000",
                                       "totalDescuento": "0.0000",
                                       "totalIva": "13.0000",
+                                      "cliente": {
+                                        "id": 6
+                                      },
+                                      "comercio": {
+                                        "id": 1
+                                      },
                                       "detallesVenta": [
                                         {
                                           "numItem": 1,
                                           "tipoItem": "BIEN",
-                                          "numeroDocumento": null,
                                           "cantidad": "1.0000",
                                           "codigo": "PROD-001",
-                                          "codTributo": null,
-                                          "descripcion": "Laptop HP 15.6\\"",
+                                          "descripcion": "Laptop HP 15.6\\\"",
                                           "precioUni": "600.0000",
                                           "montoDescu": "0.0000",
                                           "ventaNoSuj": "0.0000",
@@ -100,59 +99,12 @@ public class VentaController {
                                           "ventaGravada": "600.0000",
                                           "psv": "600.0000",
                                           "noGravado": "0.0000",
-                                          "ivaItem": "78.0000"
+                                          "ivaItem": "78.0000",
+                                          "producto": {
+                                            "id": 2
+                                          }
                                         }
-                                      ],
-                                      "cliente": {
-                                        "tipoDocumento": "13",
-                                        "numDocumento": "",
-                                        "nrc": "",
-                                        "nombre": "Cliente Genérico",
-                                        "apellidos": "",
-                                        "nombreComercial": "",
-                                        "telefono": "",
-                                        "correo": "",
-                                        "granContribuyente": true,
-                                        "complementoDireccion": "",
-                                        "activo": true,
-                                        "distrito": {
-                                          "nombre": "",
-                                          "codigo": ""
-                                        },
-                                        "actividadEconomica": {
-                                          "codActividad": "47100",
-                                          "descActividad": "Venta al por menor",
-                                          "activo": true
-                                        }
-                                      },
-                                      "comercio": {
-                                        "nit": "06141234590001",
-                                        "nrc": "123456-7",
-                                        "nombre": "Comercio S.A. de C.V.",
-                                        "nombreComercial": "Comercio",
-                                        "tipoEstablecimiento": 2,
-                                        "telefono": "22000000",
-                                        "codEstableMH": "M001",
-                                        "codPuntoVentaMH": "P001",
-                                        "correo": "comercio@correo.com",
-                                        "granContribuyente": false,
-                                        "complementoDireccion": "Col. Las Brisas",
-                                        "municipio": {
-                                          "distritos": [
-                                            {
-                                              "nombre": "",
-                                              "codigo": ""
-                                            }
-                                          ],
-                                          "nombre": "",
-                                          "codigo": ""
-                                        },
-                                        "actividadEconomica": {
-                                          "codActividad": "47100",
-                                          "descActividad": "Venta al por menor",
-                                          "activo": true
-                                        }
-                                      }
+                                      ]
                                     }
                                     """
                             )
@@ -160,7 +112,8 @@ public class VentaController {
             )
             @RequestBody Venta venta
     ) {
-        return servicio.guardar(venta);
+        System.out.println(">>> POST /api/v1/Ventas llamado con validar = " + validar + ", numeroControl en JSON: " + venta.getNumeroControl());
+        return servicio.guardar(venta, validar);
     }
 
     @Operation(summary = "Actualizar una venta",

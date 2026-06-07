@@ -33,6 +33,6 @@ public class Departamento {
     private String Nombre;
 
     @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, orphanRemoval = false,fetch = FetchType.EAGER)
-    @Schema(description = "Lista de municipios del departamento")
+    @Schema(description = "Lista de municipios del departamento", hidden = true)
     private List<Municipio> municipios = new ArrayList<>();
 }

@@ -21,8 +21,8 @@ public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty(value = "id", access = JsonProperty.Access.READ_ONLY)
-    @Schema(description = "ID autogenerado", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
+    @JsonProperty(value = "id")
+    @Schema(description = "ID autogenerado", example = "1")
     private Long Id;
 
     @Column(name = "codigo", nullable = false)

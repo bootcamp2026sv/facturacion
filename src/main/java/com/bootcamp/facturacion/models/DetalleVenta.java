@@ -86,7 +86,7 @@ public class DetalleVenta{
     @Schema(description = "IVA del ítem", example = "78.0000")
     public BigDecimal ivaItem;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "producto_id", nullable = false)
     @Schema(description = "Producto asociado")

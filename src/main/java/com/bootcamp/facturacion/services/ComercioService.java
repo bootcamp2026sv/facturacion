@@ -42,7 +42,7 @@ public class ComercioService {
         comercio.setComplementoDireccion(comercioDTO.getComplementoDireccion());
         comercio.setTipoEstablecimiento(comercioDTO.getTipoEstablecimiento());
         comercio.setGranContribuyente(comercioDTO.isGranContribuyente());
-
+        comercio.setCorreo(comercioDTO.getCorreo());
         Municipio municipio= new Municipio();
         municipio.setId(comercioDTO.getMunicipio_id());
 

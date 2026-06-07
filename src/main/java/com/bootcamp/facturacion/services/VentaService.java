@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VentaService {
@@ -16,17 +17,26 @@ public class VentaService {
     private final ClienteRepository clienteRepo;
     private final ComercioRepository comercioRepo;
     private final CorrelativoDteService correlativoService;
+    private final ActividadEconomicaRepository actividadRepo;
+    private final MunicipioRepository municipioRepo;
+    private final DistritoRepository distritoRepo;
 
     public VentaService(VentaRepository repo,
                         ProductoRepository productoRepo,
                         ClienteRepository clienteRepo,
                         ComercioRepository comercioRepo,
-                        CorrelativoDteService correlativoService) {
+                        CorrelativoDteService correlativoService,
+                        ActividadEconomicaRepository actividadRepo,
+                        MunicipioRepository municipioRepo,
+                        DistritoRepository distritoRepo) {
         this.repo = repo;
         this.productoRepo = productoRepo;
         this.clienteRepo = clienteRepo;
         this.comercioRepo = comercioRepo;
         this.correlativoService = correlativoService;
+        this.actividadRepo = actividadRepo;
+        this.municipioRepo = municipioRepo;
+        this.distritoRepo = distritoRepo;
     }
 
     public List<Venta> listadoVentas() {
@@ -86,17 +96,41 @@ public class VentaService {
 
         // Buscar por NIT
         if (comercio.getNit() != null && !comercio.getNit().isBlank()) {
-            return comercioRepo.findByNit(comercio.getNit())
-                    .orElseThrow(() -> new RuntimeException(
-                            "Comercio con NIT " + comercio.getNit() + " no encontrado"));
+            Optional<Comercio> optComercio = comercioRepo.findByNit(comercio.getNit());
+            if (optComercio.isPresent()) {
+                return optComercio.get();
+            }
         }
 
-        throw new RuntimeException("Debe indicar el id o nit del comercio");
+        // Si no existe, lo creamos/guardamos usando los datos enviados
+        if (comercio.getActividadEconomica() != null) {
+            String codAct = comercio.getActividadEconomica().getCodActividad();
+            if (codAct != null && !codAct.isBlank()) {
+                ActividadEconomica ae = actividadRepo.findByCodActividad(codAct).orElse(null);
+                if (ae == null) {
+                    ae = actividadRepo.save(comercio.getActividadEconomica());
+                }
+                comercio.setActividadEconomica(ae);
+            }
+        }
+        if (comercio.getMunicipio() != null) {
+            String codMun = comercio.getMunicipio().getCodigo();
+            if (codMun != null && !codMun.isBlank()) {
+                Municipio mun = municipioRepo.findByCodigo(codMun).orElse(null);
+                comercio.setMunicipio(mun);
+            } else {
+                comercio.setMunicipio(null);
+            }
+        }
+        if (comercio.getNombre() == null || comercio.getNombre().isBlank()) {
+            comercio.setNombre("Comercio S.A. de C.V.");
+        }
+        if (comercio.getNombreComercial() == null || comercio.getNombreComercial().isBlank()) {
+            comercio.setNombreComercial("Comercio");
+        }
+        return comercioRepo.save(comercio);
     }
 
-    /**
-     * Busca el cliente por ID o por numDocumento. Debe existir previamente en la BD.
-     */
     private Cliente resolverCliente(Cliente cliente) {
         if (cliente == null) {
             throw new RuntimeException("Debe indicar el cliente (por id o numDocumento)");
@@ -111,12 +145,45 @@ public class VentaService {
 
         // Buscar por número de documento
         if (cliente.getNumDocumento() != null && !cliente.getNumDocumento().isBlank()) {
-            return clienteRepo.findByNumDocumento(cliente.getNumDocumento())
-                    .orElseThrow(() -> new RuntimeException(
-                            "Cliente con documento " + cliente.getNumDocumento() + " no encontrado"));
+            Optional<Cliente> optCliente = clienteRepo.findByNumDocumento(cliente.getNumDocumento());
+            if (optCliente.isPresent()) {
+                return optCliente.get();
+            }
         }
 
-        throw new RuntimeException("Debe indicar el id o numDocumento del cliente");
+        // Si el documento es nulo o vacío, intentamos ubicar un cliente genérico o el primero con documento vacío
+        Optional<Cliente> genericCliente = clienteRepo.findFirstByNumDocumentoIsNull()
+                .or(() -> clienteRepo.findFirstByNumDocumento(""));
+        
+        if (genericCliente.isPresent()) {
+            return genericCliente.get();
+        }
+
+        // Si no existe, lo creamos
+        if (cliente.getActividadEconomica() != null) {
+            String codAct = cliente.getActividadEconomica().getCodActividad();
+            if (codAct != null && !codAct.isBlank()) {
+                ActividadEconomica ae = actividadRepo.findByCodActividad(codAct).orElse(null);
+                if (ae == null) {
+                    ae = actividadRepo.save(cliente.getActividadEconomica());
+                }
+                cliente.setActividadEconomica(ae);
+            }
+        }
+        if (cliente.getDistrito() != null) {
+            String codDist = cliente.getDistrito().getCodigo();
+            if (codDist != null && !codDist.isBlank()) {
+                Distrito dist = distritoRepo.findByCodigo(codDist).orElse(null);
+                cliente.setDistrito(dist);
+            } else {
+                cliente.setDistrito(null);
+            }
+        }
+        if (cliente.getNombre() == null || cliente.getNombre().isBlank()) {
+            cliente.setNombre("Cliente Genérico");
+        }
+        cliente.setActivo(true);
+        return clienteRepo.save(cliente);
     }
 
     /**

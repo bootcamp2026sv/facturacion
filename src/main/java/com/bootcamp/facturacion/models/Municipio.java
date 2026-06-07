@@ -32,7 +32,7 @@ public class Municipio {
     @Schema(description = "Nombre del municipio", example = "San Salvador")
     private String Nombre;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "departamento_id", nullable = false)
     @Schema(description = "Departamento al que pertenece")

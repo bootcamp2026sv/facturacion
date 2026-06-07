@@ -73,6 +73,10 @@ public class VentaController {
                                       "motivoContin": null,
                                       "fecha": "2025-01-15T10:30:00",
                                       "tipoMoneda": "USD",
+                                      "jsonVenta": "",
+                                      "selloRecepcion": "",
+                                      "jsonAnulacion": "",
+                                      "selloAnulacion": "",
                                       "totalGeneral": "100.0000",
                                       "totalExento": "0.0000",
                                       "totalNoSujeto": "0.0000",
@@ -84,9 +88,11 @@ public class VentaController {
                                         {
                                           "numItem": 1,
                                           "tipoItem": "BIEN",
+                                          "numeroDocumento": null,
                                           "cantidad": "1.0000",
                                           "codigo": "PROD-001",
-                                          "descripcion": "Laptop HP 15.6",
+                                          "codTributo": null,
+                                          "descripcion": "Laptop HP 15.6\\"",
                                           "precioUni": "600.0000",
                                           "montoDescu": "0.0000",
                                           "ventaNoSuj": "0.0000",
@@ -97,8 +103,56 @@ public class VentaController {
                                           "ivaItem": "78.0000"
                                         }
                                       ],
-                                      "cliente": { "id": 1 },
-                                      "comercio": { "id": 1 }
+                                      "cliente": {
+                                        "tipoDocumento": "13",
+                                        "numDocumento": "",
+                                        "nrc": "",
+                                        "nombre": "Cliente Genérico",
+                                        "apellidos": "",
+                                        "nombreComercial": "",
+                                        "telefono": "",
+                                        "correo": "",
+                                        "granContribuyente": true,
+                                        "complementoDireccion": "",
+                                        "activo": true,
+                                        "distrito": {
+                                          "nombre": "",
+                                          "codigo": ""
+                                        },
+                                        "actividadEconomica": {
+                                          "codActividad": "47100",
+                                          "descActividad": "Venta al por menor",
+                                          "activo": true
+                                        }
+                                      },
+                                      "comercio": {
+                                        "nit": "06141234590001",
+                                        "nrc": "123456-7",
+                                        "nombre": "Comercio S.A. de C.V.",
+                                        "nombreComercial": "Comercio",
+                                        "tipoEstablecimiento": 2,
+                                        "telefono": "22000000",
+                                        "codEstableMH": "M001",
+                                        "codPuntoVentaMH": "P001",
+                                        "correo": "comercio@correo.com",
+                                        "granContribuyente": false,
+                                        "complementoDireccion": "Col. Las Brisas",
+                                        "municipio": {
+                                          "distritos": [
+                                            {
+                                              "nombre": "",
+                                              "codigo": ""
+                                            }
+                                          ],
+                                          "nombre": "",
+                                          "codigo": ""
+                                        },
+                                        "actividadEconomica": {
+                                          "codActividad": "47100",
+                                          "descActividad": "Venta al por menor",
+                                          "activo": true
+                                        }
+                                      }
                                     }
                                     """
                             )

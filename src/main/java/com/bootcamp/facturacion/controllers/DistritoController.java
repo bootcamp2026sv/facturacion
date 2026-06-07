@@ -1,6 +1,5 @@
 package com.bootcamp.facturacion.controllers;
 
-import com.bootcamp.facturacion.dto.DistritoDTO;
 import com.bootcamp.facturacion.models.Distrito;
 import com.bootcamp.facturacion.services.DistritoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -73,7 +72,7 @@ public class DistritoController {
                             )
                     )
             )
-            @RequestBody DistritoDTO distrito
+            @RequestBody Distrito distrito
     ){
         return servicio.guardar(distrito);
     }

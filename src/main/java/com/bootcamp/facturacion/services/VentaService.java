@@ -55,6 +55,8 @@ public class VentaService {
 
     @Transactional
     public Venta guardar(Venta venta, boolean validar) {
+        recalcularTotales(venta);
+
         if (validar) {
             // 1. Resolver comercio (debe existir en BD)
             venta.setComercio(resolverComercio(venta.getComercio()));
@@ -252,5 +254,93 @@ public class VentaService {
                             "Producto con código '" + detalle.codigo + "' no encontrado"));
             detalle.setProducto(producto);
         }
+    }
+
+    /**
+     * Recalcula todos los totales de la venta a partir de los detalles de la venta,
+     * recalculando previamente cada línea de detalle con su cantidad, precio unitario y descuento.
+     */
+    private void recalcularTotales(Venta venta) {
+        java.math.BigDecimal totalExento = java.math.BigDecimal.ZERO;
+        java.math.BigDecimal totalNoSujeto = java.math.BigDecimal.ZERO;
+        java.math.BigDecimal totalGravado = java.math.BigDecimal.ZERO;
+        java.math.BigDecimal totalNoGravado = java.math.BigDecimal.ZERO;
+        java.math.BigDecimal totalDescuento = java.math.BigDecimal.ZERO;
+        java.math.BigDecimal totalIva = java.math.BigDecimal.ZERO;
+
+        if (venta.getDetallesVenta() != null) {
+            for (DetalleVenta detalle : venta.getDetallesVenta()) {
+                // 1. Asegurar valores no nulos
+                java.math.BigDecimal cantidad = detalle.cantidad != null ? detalle.cantidad : java.math.BigDecimal.ONE;
+                java.math.BigDecimal precioUni = detalle.precioUni != null ? detalle.precioUni : java.math.BigDecimal.ZERO;
+                java.math.BigDecimal montoDescu = detalle.montoDescu != null ? detalle.montoDescu : java.math.BigDecimal.ZERO;
+                java.math.BigDecimal noGravado = detalle.noGravado != null ? detalle.noGravado : java.math.BigDecimal.ZERO;
+
+                // 2. Calcular subtotal de la línea (cantidad * precioUni - montoDescu)
+                java.math.BigDecimal subtotal = cantidad.multiply(precioUni).subtract(montoDescu);
+                if (subtotal.compareTo(java.math.BigDecimal.ZERO) < 0) {
+                    subtotal = java.math.BigDecimal.ZERO;
+                }
+
+                // 3. Determinar categoría fiscal de la línea y asignarle el subtotal correspondiente
+                boolean esExenta = detalle.ventaExenta != null && detalle.ventaExenta.compareTo(java.math.BigDecimal.ZERO) > 0;
+                boolean esNoSujeta = detalle.ventaNoSuj != null && detalle.ventaNoSuj.compareTo(java.math.BigDecimal.ZERO) > 0;
+
+                if (esExenta) {
+                    detalle.ventaExenta = subtotal.setScale(4, java.math.RoundingMode.HALF_UP);
+                    detalle.ventaNoSuj = java.math.BigDecimal.ZERO;
+                    detalle.ventaGravada = java.math.BigDecimal.ZERO;
+                    detalle.ivaItem = java.math.BigDecimal.ZERO;
+                } else if (esNoSujeta) {
+                    detalle.ventaNoSuj = subtotal.setScale(4, java.math.RoundingMode.HALF_UP);
+                    detalle.ventaExenta = java.math.BigDecimal.ZERO;
+                    detalle.ventaGravada = java.math.BigDecimal.ZERO;
+                    detalle.ivaItem = java.math.BigDecimal.ZERO;
+                } else {
+                    // Por defecto es Gravada
+                    detalle.ventaGravada = subtotal.setScale(4, java.math.RoundingMode.HALF_UP);
+                    detalle.ventaExenta = java.math.BigDecimal.ZERO;
+                    detalle.ventaNoSuj = java.math.BigDecimal.ZERO;
+
+                    // IVA del ítem (13% del subtotal gravado)
+                    java.math.BigDecimal iva = subtotal.multiply(new java.math.BigDecimal("0.13"));
+                    detalle.ivaItem = iva.setScale(4, java.math.RoundingMode.HALF_UP);
+                }
+
+                // Asegurar formato de escala en otros campos
+                detalle.cantidad = cantidad.setScale(4, java.math.RoundingMode.HALF_UP);
+                detalle.precioUni = precioUni.setScale(4, java.math.RoundingMode.HALF_UP);
+                detalle.montoDescu = montoDescu.setScale(4, java.math.RoundingMode.HALF_UP);
+                detalle.noGravado = noGravado.setScale(4, java.math.RoundingMode.HALF_UP);
+                if (detalle.psv == null) {
+                    detalle.psv = precioUni.setScale(4, java.math.RoundingMode.HALF_UP);
+                }
+
+                // 4. Acumular a los totales de la venta
+                totalExento = totalExento.add(detalle.ventaExenta);
+                totalNoSujeto = totalNoSujeto.add(detalle.ventaNoSuj);
+                totalGravado = totalGravado.add(detalle.ventaGravada);
+                totalNoGravado = totalNoGravado.add(detalle.noGravado);
+                totalDescuento = totalDescuento.add(detalle.montoDescu);
+                totalIva = totalIva.add(detalle.ivaItem);
+            }
+        }
+
+        // Asignar totales a la venta con formato de escala
+        venta.setTotalExento(totalExento.setScale(4, java.math.RoundingMode.HALF_UP));
+        venta.setTotalNoSujeto(totalNoSujeto.setScale(4, java.math.RoundingMode.HALF_UP));
+        venta.setTotalGravado(totalGravado.setScale(4, java.math.RoundingMode.HALF_UP));
+        venta.setTotalNoGravado(totalNoGravado.setScale(4, java.math.RoundingMode.HALF_UP));
+        venta.setTotalDescuento(totalDescuento.setScale(4, java.math.RoundingMode.HALF_UP));
+        venta.setTotalIva(totalIva.setScale(4, java.math.RoundingMode.HALF_UP));
+
+        // Calcular totalGeneral:
+        // En DTE "03" (Crédito Fiscal), el totalGeneral es la suma de los subtotales más el IVA.
+        // En otros DTEs (como Factura Consumidor Final "01"), el totalGravado ya incluye el IVA.
+        java.math.BigDecimal totalGeneral = totalGravado.add(totalExento).add(totalNoSujeto);
+        if ("03".equals(venta.getTipoDte())) {
+            totalGeneral = totalGeneral.add(totalIva);
+        }
+        venta.setTotalGeneral(totalGeneral.setScale(4, java.math.RoundingMode.HALF_UP));
     }
 }

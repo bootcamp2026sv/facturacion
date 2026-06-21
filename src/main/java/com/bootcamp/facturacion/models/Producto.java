@@ -8,6 +8,7 @@ import lombok.*;
 import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.bootcamp.facturacion.enums.TipoTributacion;
 
 @Entity
 @Table(name = "productos")
@@ -61,9 +62,20 @@ public class Producto {
     @Schema(description = "Marca del producto", example = "HP")
     private String marca;
 
-    @Column(name = "categoria", nullable = false)
-    @Schema(description = "Categoría del producto", example = "Electrónica")
-    private String categoria;
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = true)
+    @Schema(description = "Categoría del producto")
+    private Categoria categoria;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_tributacion", nullable = true)
+    @Builder.Default
+    @Schema(description = "Tipo de tributación del producto (GRAVADO, EXENTO, NO_SUJETO, NO_GRAVADO)", example = "GRAVADO")
+    private TipoTributacion tipoTributacion = TipoTributacion.GRAVADO;
+
+    public TipoTributacion getTipoTributacion() {
+        return this.tipoTributacion == null ? TipoTributacion.GRAVADO : this.tipoTributacion;
+    }
 
     @Column(name = "descripcion", nullable = false)
     @Schema(description = "Descripción del producto", example = "Laptop HP 15.6\"")

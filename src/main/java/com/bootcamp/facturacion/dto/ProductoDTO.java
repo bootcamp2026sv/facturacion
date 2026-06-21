@@ -45,6 +45,12 @@ public class ProductoDTO {
     @Schema(description = "Categoría del producto", example = "Electrónica")
     private String categoria;
 
+    @Schema(description = "ID de la categoría", example = "1")
+    private Long categoriaId;
+
+    @Schema(description = "Tipo de tributación (GRAVADO, EXENTO, NO_SUJETO, NO_GRAVADO)", example = "GRAVADO")
+    private String tipoTributacion;
+
     @Schema(description = "Descripción del producto", example = "Laptop HP 15.6\"")
     private String descripcion;
 

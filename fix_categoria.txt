@@ -1,0 +1,2 @@
+-- Remover restricción NOT NULL de la columna categoria antigua en productos
+ALTER TABLE productos ALTER COLUMN categoria DROP NOT NULL;

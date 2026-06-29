@@ -67,9 +67,9 @@ public class Comercio {
     private String complementoDireccion;
 
     @ManyToOne
-    @JoinColumn(name = "municipio_id", nullable = true)
-    @Schema(description = "Municipio del comercio")
-    private Municipio municipio;
+    @JoinColumn(name = "distrito_id", nullable = true)
+    @Schema(description = "Distrito del comercio")
+    private Distrito distrito;
 
     @ManyToOne
     @JoinColumn(name = "actividadEconomica_id", nullable = true)

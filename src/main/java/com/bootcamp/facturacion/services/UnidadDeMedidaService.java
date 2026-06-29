@@ -35,6 +35,9 @@ public class UnidadDeMedidaService {
         if (!repo.existsById(id)) {
             throw new RuntimeException("No se encontró la unidad de medida con el ID: " + id);
         }
+
+        //verificar si hay productos con esta unidad de medida
+
         repo.deleteById(id);
     }
 

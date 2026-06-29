@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "api/v1/UnidadDeMedidas")
 @Tag(name = "Unidades de Medida", description = "Gestión de unidades de medida")
+// @CrossOrigin(origins = "*")
 public class UnidadDeMedidaController {
 
     @Autowired

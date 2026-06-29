@@ -192,7 +192,7 @@ public class DatabaseCatalogSeeder implements CommandLineRunner {
                     .correo("contacto@mitiendita.com")
                     .granContribuyente(false)
                     .complementoDireccion("San Salvador, El Salvador")
-                    .municipio(municipioSS)
+                    .distrito(distritoSS)
                     .actividadEconomica(ae)
                     .build();
             comercioRepo.save(comercio);

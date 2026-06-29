@@ -73,6 +73,7 @@ public class Venta{
 
     @Column(name = "jsonVenta", nullable = false)
     @Schema(description = "JSON de la venta enviado a Hacienda")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String jsonVenta;
 
     @Column(name = "selloRecepcion", nullable = true)
@@ -81,6 +82,7 @@ public class Venta{
 
     @Column(name = "jsonAnulacion", nullable = true)
     @Schema(description = "JSON de anulación enviado a Hacienda")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String jsonAnulacion;
 
     @Column(name = "selloAnulacion", nullable = true)
@@ -117,6 +119,7 @@ public class Venta{
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = false)
     @Schema(description = "Detalles de la venta (líneas de productos)")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<DetalleVenta> detallesVenta = new ArrayList<>();
     //**************************************************************************
 

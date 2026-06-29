@@ -40,7 +40,7 @@ public class VentaService {
     }
 
     public List<Venta> listadoVentas() {
-        return repo.findAll();
+        return repo.buscarTodasConRelaciones();
     }
 
     public Venta unaVenta(Long id) {
@@ -148,13 +148,13 @@ public class VentaService {
                 comercio.setActividadEconomica(ae);
             }
         }
-        if (comercio.getMunicipio() != null) {
-            String codMun = comercio.getMunicipio().getCodigo();
-            if (codMun != null && !codMun.isBlank()) {
-                Municipio mun = municipioRepo.findByCodigo(codMun).orElse(null);
-                comercio.setMunicipio(mun);
+        if (comercio.getDistrito() != null) {
+            String codDist = comercio.getDistrito().getCodigo();
+            if (codDist != null && !codDist.isBlank()) {
+                Distrito dist = distritoRepo.findByCodigo(codDist).orElse(null);
+                comercio.setDistrito(dist);
             } else {
-                comercio.setMunicipio(null);
+                comercio.setDistrito(null);
             }
         }
         if (comercio.getNombre() == null || comercio.getNombre().isBlank()) {

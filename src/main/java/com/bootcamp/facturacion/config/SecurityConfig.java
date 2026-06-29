@@ -70,3 +70,4 @@ public class SecurityConfig {
     }
 
 }
+ //.anyRequest().permitAll()//.authenticated()

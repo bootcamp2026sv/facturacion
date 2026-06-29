@@ -145,7 +145,6 @@ class JsonDte03SerializationTest {
         // Serializar con Jackson
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(dte);
         
         System.out.println("JSON GENERADO PARA DTE 03 v4:");

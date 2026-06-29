@@ -47,8 +47,8 @@ public class ComercioDTO {
     @Schema(description = "Código de punto de venta MH", example = "P001")
     private String codPuntoVentaMH;
 
-    @Schema(description = "ID del municipio", example = "1")
-    private Long municipio_id;
+    @Schema(description = "ID del distrito", example = "1")
+    private Long distrito_id;
 
     @Schema(description = "ID de la actividad económica", example = "1")
     private Long actividadEconomica_id;

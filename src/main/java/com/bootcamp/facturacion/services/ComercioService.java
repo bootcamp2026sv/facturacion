@@ -4,7 +4,7 @@ import com.bootcamp.facturacion.dto.ComercioDTO;
 import com.bootcamp.facturacion.models.ActividadEconomica;
 import com.bootcamp.facturacion.models.Cliente;
 import com.bootcamp.facturacion.models.Comercio;
-import com.bootcamp.facturacion.models.Municipio;
+import com.bootcamp.facturacion.models.Distrito;
 import com.bootcamp.facturacion.repository.ClienteRepository;
 import com.bootcamp.facturacion.repository.ComercioRepository;
 import org.springframework.stereotype.Service;
@@ -43,14 +43,14 @@ public class ComercioService {
         comercio.setTipoEstablecimiento(comercioDTO.getTipoEstablecimiento());
         comercio.setGranContribuyente(comercioDTO.isGranContribuyente());
         comercio.setCorreo(comercioDTO.getCorreo());
-        Municipio municipio= new Municipio();
-        municipio.setId(comercioDTO.getMunicipio_id());
+        Distrito distrito = new Distrito();
+        distrito.setId(comercioDTO.getDistrito_id());
 
         ActividadEconomica actividad = new ActividadEconomica();
         actividad.setId(comercioDTO.getActividadEconomica_id());
         actividad.setActivo(true);
 
-        comercio.setMunicipio(municipio);
+        comercio.setDistrito(distrito);
         comercio.setActividadEconomica(actividad);
 
         return repo.save(comercio);
@@ -77,15 +77,16 @@ public class ComercioService {
         comercio.setComplementoDireccion(comercioDTO.getComplementoDireccion());
         comercio.setTipoEstablecimiento(comercioDTO.getTipoEstablecimiento());
         comercio.setGranContribuyente(comercioDTO.isGranContribuyente());
+        comercio.setCorreo(comercioDTO.getCorreo());
 
-        Municipio municipio= new Municipio();
-        municipio.setId(comercioDTO.getMunicipio_id());
+        Distrito distrito = new Distrito();
+        distrito.setId(comercioDTO.getDistrito_id());
 
         ActividadEconomica actividad = new ActividadEconomica();
         actividad.setId(comercioDTO.getActividadEconomica_id());
         actividad.setActivo(true);
 
-        comercio.setMunicipio(municipio);
+        comercio.setDistrito(distrito);
         comercio.setActividadEconomica(actividad);
         return repo.save(comercio);
     }
